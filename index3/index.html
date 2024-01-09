@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>ПР3.3 - lab_work_3</title>
+        <title>ЛР4 - lab_work_3</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -31,16 +31,13 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="navitem">
-                                <a href=".." class="nav-link">ПР3.1</a>
+                                <a href=".." class="nav-link">ПР4.2</a>
                             </li>
                             <li class="navitem">
-                                <a href="../index2/" class="nav-link">ПР3.2</a>
+                                <a href="../index2/" class="nav-link">ПР4.3</a>
                             </li>
                             <li class="navitem active">
-                                <a href="./" class="nav-link">ПР3.3</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../index4/" class="nav-link">ЛР3</a>
+                                <a href="./" class="nav-link">ЛР4</a>
                             </li>
                         </ul>
 
@@ -56,7 +53,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../index4/" class="nav-link">
+                                <a rel="next" class="nav-link disabled">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -78,13 +75,17 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#33" class="nav-link">Практическая 3.3</a>
+            <li class="nav-item" data-level="1"><a href="#4" class="nav-link">Лабораторная работа 4</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#mkdocs-swagger" class="nav-link">Создание документации с помощью mkdocs и swagger</a>
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Подготовка</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Результат работы скрипта</a>
+            <li class="nav-item" data-level="2"><a href="#vue" class="nav-link">Этап Vue</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">Результаты</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -95,28 +96,182 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="33">Практическая 3.3</h1>
-<h2 id="mkdocs-swagger">Создание документации с помощью mkdocs и swagger</h2>
-<p>Была успешно произведена установка пакета drf_yasg. В код текущей лабораторной добавленые следующие строки на языке Python, аннотирующие код:</p>
-<pre><code class="language-Python">from rest_framework import permissions
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
+<h1 id="4">Лабораторная работа 4</h1>
+<h2 id="_1">Подготовка</h2>
+<p>Так как CORS был настроен в предыдущей практической, то можно приступить к созданию View для фронта на Vue. Есть сомнения по поводу решения с применением @csrf_exempt, так как этот декоратор позволяет полностью игнорировать csrf. Однако, в документации этот пример активно используется:</p>
+<pre><code class="language-Python">from rest_framework.authtoken.models import Token
+from django.contrib.auth import authenticate
+from django.views.decorators.csrf import csrf_exempt
+import json
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from django.contrib.auth.models import User
 
-schema_view = get_schema_view(
-   openapi.Info(
-      title=&quot;API&quot;,
-      default_version='Conversion, software version 7.0',
-      description=&quot;Looking at life through the eyes of a tire hub &quot;,
-      terms_of_service=&quot;Пользуйтесь на здоровье&quot;,
-      contact=openapi.Contact(email=&quot;Не пишите, но если уже начали - не прекращайте, nick.chaptykov@gmail.com&quot;),
-      license=openapi.License(name=&quot;Лицензия на продажу рыболовных снастей&quot;),
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
-)
+
+@csrf_exempt
+@api_view(('POST',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def sign_in_js(request):
+    request_json = json.loads(request.body)
+    print(request.body)
+    username = request_json['username']
+    password = request_json['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        login(request, user=user)
+        # token, created = Token.objects.get_or_create(user=user)
+        return Response(status=200)
+    else:
+        return Response(status=404)
+
+
+@csrf_exempt
+@api_view(('POST',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def sign_up_js(request):
+    request_json = json.loads(request.body)
+    username = request_json['username']
+    password = request_json['password']
+    user = User.objects.create_user(username=username, password=password)
+    if user is not None:
+        return Response(status=200)
+    else:
+        return Response(status=404)
+
+
+@csrf_exempt
+def get_group_list(request):
+    groups = AcademicGroup.objects.all()
+    serializer = GroupSerializer(groups, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+@csrf_exempt
+def get_group_js(request, pk):
+    students = Student.objects.all().filter(group=pk)
+    serializer = StudentSerializer(students, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+@csrf_exempt
+def get_tutor_list(request):
+    tutors = Tutor.objects.all().filter()
+    serializer = TutorSerializer(tutors, many=True)
+    return JsonResponse(serializer.data, safe=False)
 </code></pre>
-<h2 id="_1">Результат работы скрипта</h2>
-<p><img alt="Image title" src="../img.png" /></p></div>
+<h2 id="vue">Этап Vue</h2>
+<p>Опишем основные пути проекта в index.js:</p>
+<pre><code class="language-Javascript">import Hello from &quot;@/components/Hello.vue&quot;;
+import Warriors from &quot;@/views/Warriors.vue&quot;;
+import Login from &quot;@/components/Login.vue&quot;;
+import Register from &quot;@/components/Register.vue&quot;;
+import GroupList from &quot;@/components/GroupList.vue&quot;;
+import Group from &quot;@/components/Group.vue&quot;;
+import TutorList from &quot;@/components/TutorList.vue&quot;;
+import {createRouter, createWebHistory} from &quot;vue-router&quot;;
+
+const routes = [  // массив с роутами
+   // отдельный роут:   
+   {
+      path: '/hi', // конкретный url-адрес
+      component: Hello // Ссылка на компонент
+   },
+   {
+      path: '/warriors',
+      component: Warriors
+   },
+   {
+      path: '/login',
+      component: Login
+   },
+      {
+      path: '/register',
+      component: Register
+   },
+   {
+      path: '/group/',
+      component: GroupList
+   },
+   {
+      path: '/group/:groupid?',
+      component: Group
+   },
+   {
+      path: '/tutor/',
+      component: TutorList
+   }
+]
+
+const router = createRouter({
+   history: createWebHistory(), routes
+})
+
+export default router // экспортируем сконфигурированный роутер
+</code></pre>
+<p>Скрипт, используемый при регистрации:</p>
+<pre><code class="language-JavaScript">&lt;script&gt;
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      username: '',
+      password: ''
+    }
+  },
+  methods: {
+    signup() {
+      axios.post('http://127.0.0.1:8000/register_js/', {
+        username: this.username,
+        password: this.password
+      })
+      .then(response =&gt; {
+        console.log(response.data);
+        if(response.status==200){this.$router.push({ path: '/login'});}
+      });
+    },
+    gotoSignIn() {
+      this.$router.push({ path: '/login'});
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre>
+<p>Скрипты, используемые для получения списка групп и референса к списку преподавателей:</p>
+<pre><code class="language-JavaScript">&lt;script&gt;
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      items: []
+    };
+  },
+  created() {
+    axios.get('http://127.0.0.1:8000/group_js/')
+      .then(response =&gt; {
+        this.items = response.data;
+      })
+      .catch(error =&gt; {
+        console.error(error);
+      });
+  },
+  methods : {
+    showGroup(item) {
+      this.$router.push({ path: item});
+      },
+    gotoTutors() {
+      this.$router.push({ path: '/tutor/'});
+    }
+
+  }
+}
+&lt;/script&gt;
+</code></pre>
+<h2 id="_2">Результаты</h2>
+<p>Чтобы сделать интерфейсы более красивыми были использованы готовые решения с bootstrap:
+<img alt="Image title" src="../login.png" />
+<img alt="Image title" src="../table.png" /></p></div>
             </div>
         </div>
 
