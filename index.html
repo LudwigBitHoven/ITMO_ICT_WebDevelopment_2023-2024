@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="img/favicon.ico">
-        <title>lab_work_3</title>
+        <title>My Docs</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
@@ -20,26 +20,10 @@
     <body class="homepage">
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href=".">lab_work_3</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <a class="navbar-brand" href=".">My Docs</a>
 
                 <!-- Expanded navigation -->
                 <div id="navbar-collapse" class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="navitem active">
-                                <a href="." class="nav-link">ПР4.2</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="index2/" class="nav-link">ПР4.3</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="index3/" class="nav-link">ЛР4</a>
-                            </li>
-                        </ul>
 
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item">
@@ -47,16 +31,6 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li class="nav-item">
-                                <a rel="prev" class="nav-link disabled">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" href="index2/" class="nav-link">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
                     </ul>
                 </div>
             </div>
@@ -75,28 +49,28 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#42" class="nav-link">Практическая 4.2</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Особенности выполнения работы</a>
+            <li class="nav-item" data-level="2"><a href="#1" class="nav-link">Задание 1</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">Список воинов</a>
+            
+            <li class="nav-item" data-level="2"><a href="#2" class="nav-link">Задание 2</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">Форма для воина</a>
+            
+            <li class="nav-item" data-level="2"><a href="#3" class="nav-link">Задание 3</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#view" class="nav-link">View для воинов</a>
+            
+            <li class="nav-item" data-level="2"><a href="#4" class="nav-link">Задание 4</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">Результат</a>
+            
+            <li class="nav-item" data-level="2"><a href="#5" class="nav-link">Задание 5</a>
               <ul class="nav flex-column">
-              </ul>
-            </li>
               </ul>
             </li>
         </ul>
@@ -104,128 +78,384 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="42">Практическая 4.2</h1>
-<h2 id="_1">Особенности выполнения работы</h2>
-<p>Некоторые предоставленные файлы имели несколько синтаксических ошибок, поэтому в ряде случаев их приходилось исправлять по ходу выполнения. Также ресурс не был доступен по предоставленному адресу, возможно это ошибка с моей стороны:
-<img alt="Image title" src="%D0%BD%D0%B5%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%B5%D0%BD.png" /></p>
-<h2 id="_2">Список воинов</h2>
-<pre><code class="language-Html">&lt;template&gt;
- &lt;div class=&quot;warrior&quot; v-for=&quot;warrior in warriors&quot;&gt; &lt;!-- v-for - директива для отображения списка элементов на основе массива. --&gt;
-   &lt;div&gt;&lt;strong&gt;Имя:&lt;/strong&gt; {{ warrior.name }}&lt;/div&gt; 
-   &lt;div&gt;&lt;strong&gt;Расса:&lt;/strong&gt; {{ warrior.race }}&lt;/div&gt;
- &lt;/div&gt;
-&lt;/template&gt;
+<h2 id="1">Задание 1</h2>
+<h3 id="_1">Клиентская часть</h3>
+<p>Устанавливаем сокет клиента по UDP:</p>
+<pre><code class="language-Python">import socket
 
-&lt;script&gt;
-export default {
- props: { // «Props» -- это специальное ключевое слово, обозначающее свойства . Его можно зарегистрировать в дочернем компоненте для передачи данных от родительского компонента к одному из его дочерних компонентов.
-   warriors: {
-     type: Array,
-     required: true
-   }
- }
-}
-&lt;/script&gt;
+HOST = 'localhost'
+PORT = 8081
 
-&lt;style scoped&gt;
-
-&lt;/style&gt;
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect((HOST, PORT))
 </code></pre>
-<h2 id="_3">Форма для воина</h2>
-<pre><code class="language-html">&lt;template&gt;
- &lt;form @submit.prevent&gt; &lt;!-- @submit.prevent позволяет остановить перезагрузку страницы после нажатия кнопки --&gt;
-   &lt;h1&gt;Создание война&lt;/h1&gt;
-   &lt;input
-       v-model=&quot;warrior.name&quot;
-       class=&quot;input&quot;
-       type=&quot;text&quot;
-       placeholder=&quot;Имя&quot;&gt; &lt;!-- Вызывает форму, при нажатии кнопки &quot;Создать&quot;, &quot;warrior.name&quot; получит значение из формы --&gt;
-   &lt;input
-       v-model=&quot;warrior.race&quot;
-       class=&quot;input&quot;
-       type=&quot;text&quot;
-       placeholder=&quot;Раса&quot;&gt;
-   &lt;button class=&quot;btn&quot; v-on:click=&quot;createWarrior&quot;&gt;Cоздать&lt;/button&gt; &lt;!-- Нажатие кнопки &quot;Создать&quot; вызывает метод &quot;createWarrior&quot; и записывает данные в объект &quot;warrior&quot; --&gt;
- &lt;/form&gt;
-&lt;/template&gt;
+<p>Пакуем и отправляем сообщение, получаем ответ от сервера:</p>
+<pre><code class="language-Python">message = 'Hello server!'
+s.sendto(message.encode('utf-8'), (HOST, PORT))
 
-&lt;script&gt;
-import axios from &quot;axios&quot;;
+data = s.recv(1024)
+print('Received: ' + data.decode('utf-8'))
 
-export default {
- name: &quot;WarriorForm&quot;,
- data () {
-   return {
-     warrior: {
-       name: '',
-       race: ''
-     }
-   }
- },
- methods: {
-   createWarrior() {
-     axios.post('http://62.109.28.95:8890/warrior/create1', {
-       race: this.warrior.race,
-       name: this.warrior.name,
-     });
-   }
- }
-}
-&lt;/script&gt;
-
-&lt;style scoped&gt;
-
-&lt;/style&gt;
+s.close()
 </code></pre>
-<h2 id="view">View для воинов</h2>
-<pre><code class="language-html">&lt;template&gt;
-   &lt;div class=&quot;app&quot;&gt;
-     &lt;h1&gt;Портал информации о войнах в онлайн РПГ&lt;/h1&gt;
-     &lt;button v-on:click=&quot;fetchWarriors&quot;&gt;Получить список войнов&lt;/button&gt; &lt;!-- Кнопка вызывает функцию получения списка данных (функция fetchWarriors объявлена в блоке &quot;methods&quot;) --&gt;
-     &lt;warrior-form/&gt; &lt;!-- Встраивание компонента формы --&gt;
-     &lt;warrior-list
-         v-bind:warriors=&quot;warriors&quot;
-     /&gt; &lt;!-- Встраивание компонента вызывающего список объектов. v-bind - директива служит для так называемой data binding -- привязки данных (данные объявляются в блоке данных data() (см. код ниже)). --&gt;
-   &lt;/div&gt;
-&lt;/template&gt;
+<h3 id="_2">Серверная часть</h3>
+<p>Устанавливаем сокет сервера по UDP:</p>
+<pre><code class="language-Python">import socket
+import sys
 
-&lt;script&gt;
-import WarriorForm from &quot;@/components/WarriorForm.vue&quot;;
-import WarriorList from &quot;@/components/WarriorList.vue&quot;;
-import axios from &quot;axios&quot;;
+HOST = 'localhost'
+PORT = 8081
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-export default {
- components: {
-   WarriorForm, WarriorList
- },
-
- data() { // data - это функция, которая возвращает объект с данными
-   return {
-     warriors: [], // Массив данных (передается в компонент WarriorList, получает данные средствами функции fetchWarriors
-   }
- },
- methods: { // methods. Это объект, который содержит список Javascript функций, которые должны выполняться в зависимости от того, какие действия производит пользователь.
-   async fetchWarriors () { // асинхронная функция для получения данных
-     try {
-       const response = await axios.get('http://62.109.28.95:8890/warriors/list/') // Выполнение GET-запроса Backend-серверу. Запрос вернет JSON.
-       console.log(response.data.results)
-       this.warriors = response.data.results // Массив данных warriors из блока(функции) data() получает значением результат только-что выполненного запроса
-     } catch (e) {
-       alert('Ошибка')
-     }
-   }
-
- },
- mounted() {
-   this.fetchWarriors() // Vue вызывает хук mount(), когда компонент добавляется в DOM.  В данном примере это позволяет вызвать fetchWarriors для получения списка воинов до отрисовки страницы в браузере, благодаря этому страница загружается с уже полученными ранее данными.
-
- }
-}
-&lt;/script&gt;
+try:
+    s.bind((HOST, PORT))
+except socket.error as msg:
+    print('Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
 </code></pre>
-<h2 id="_4">Результат</h2>
-<p><img alt="Image title" src="%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B0.png" />
-<img alt="Image title" src="created.png" /></p></div>
+<p>Обрабатываем подключение</p>
+<pre><code class="language-Python">while True:
+
+    data, addr = s.recvfrom(1024)
+    print('Received: ' + data.decode('utf-8'))
+
+    message = 'Hello, client!'
+    s.sendto(message.encode('utf-8'), addr)
+</code></pre>
+<h2 id="2">Задание 2</h2>
+<p>Логика для расчета сторон по теореме Пифагора и валидация сообщения клиента:</p>
+<pre><code class="language-Python">def LocateCalculate(data):
+    if data[2] == 0:
+        return (data[0] ** 2 + data[1] ** 2) ** 0.5
+    elif data[1] == 0:
+        return (data[2] ** 2 - data[0] ** 2) ** 0.5
+    return (data[2] ** 2 - data[1] ** 2) ** 0.5
+
+def CheckMessage(data):
+    try:
+        val_tuple = tuple(map(int, data.split()))
+    except ValueError:
+        print('Something went wrong with input')
+        return False
+    for i in val_tuple:
+        if i &lt; 0:
+            print('Sides can not be negative')
+            return False
+    if (val_tuple[2] &lt;= val_tuple[1] or val_tuple[2] &lt;= val_tuple[0]) and val_tuple[2] != 0:
+        print('Hypothenus can not be shorter than cathetus')
+        return False
+    return val_tuple
+</code></pre>
+<h3 id="_3">Клиентская часть</h3>
+<p>Устанавливаем сокет клиента по TCP:</p>
+<pre><code class="language-Python">import socket
+
+message = input()
+
+HOST = 'localhost'
+PORT = 8081
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((HOST, PORT))
+</code></pre>
+<p>Логика отправления и приема сообщений:</p>
+<pre><code class="language-Python">s.sendall(message.encode('utf-8'))
+
+data = s.recv(1024)
+print(data.decode('utf-8'))
+
+data = s.recv(1024)
+print(data.decode('utf-8'))
+
+s.close()
+</code></pre>
+<h3 id="_4">Серверная часть</h3>
+<p>Устанавливаем сокет сервера по TCP:</p>
+<pre><code class="language-Python">import socket
+import sys
+from func import LocateCalculate, CheckMessage
+
+HOST = 'localhost'
+PORT = 8081
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+try:
+    s.bind((HOST, PORT))
+except socket.error as msg:
+    print('Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
+
+s.listen(10)
+</code></pre>
+<p>Обрабатываем подключения:</p>
+<pre><code class="language-Python">while True:
+    conn, addr = s.accept()
+    print('Connected with ' + addr[0] + ':' + str(addr[1]))
+
+    data = conn.recv(1024)
+    reply = data.decode('utf-8')
+    message = 'Pythagorator 3000k\nInsert data like &quot;leg leg hypothenus&quot; using space as separator, mark unknown as &quot;0&quot;, e.g. 0 3 25'
+    conn.sendall(message.encode('utf-8'))
+    temp = CheckMessage(reply)
+    if temp:
+        msg = f&quot;The input is: {reply}\nX = {LocateCalculate(temp)}&quot;
+        conn.sendto(msg.encode('utf-8'), addr)
+        print(f&quot;sent to {addr}&quot;)
+
+    conn.close()
+</code></pre>
+<h2 id="3">Задание 3</h2>
+<h3 id="_5">Клиентская часть</h3>
+<p>Инициализация сокета взята из предыдущего упражнения
+Отправляем запрос на сервер, получаем ответ:</p>
+<pre><code class="language-Python">request = 'GET / HTTP/1.1\r\nHost: localhost\r\n\r\n'
+s.sendall(request.encode())
+
+data = s.recv(1024)
+print(data.decode('utf-8'))
+
+s.close()
+</code></pre>
+<h3 id="_6">Серверная часть</h3>
+<p>Инициализация сокета взята из предыдущего упражнения
+Читаем файл посредством Python:</p>
+<pre><code class="language-Python">with open('index.html', 'r') as f:
+    file = f.read()
+</code></pre>
+<p>Отправляем файл каждому подключенному пользователю:</p>
+<pre><code class="language-Python">while True:
+    conn, addr = s.accept()
+    print('Connected with ' + addr[0] + ':' + str(addr[1]))
+    conn.sendto(file.encode('utf-8'), addr)
+    data = conn.recv(1024)
+    conn.close()
+</code></pre>
+<h2 id="4">Задание 4</h2>
+<h3 id="_7">Клиентская часть</h3>
+<p>Функция ожидания сообщения:</p>
+<pre><code class="language-Python">def WaitForMessage(conn):
+    while True:
+        try:
+            data = conn.recv(1024)
+            if data:
+                print(data.decode('utf-8'))
+        except:
+            break
+    conn.close()
+</code></pre>
+<p>Поддержка соединения у клиента:</p>
+<pre><code class="language-Python">message = 1
+while message:
+    th = threading.Thread(target=WaitForMessage, args=(s,))
+    th.start()
+    message = input()
+    s.sendall(message.encode('utf-8'))
+
+s.close()
+</code></pre>
+<h3 id="_8">Серверная часть</h3>
+<p>Функции поддержки массовой рассылки, поддержки эмодзи и ожидания сообщения:</p>
+<pre><code class="language-Python">def Emojify(addr):
+    emoji = b&quot;\\&quot; + f&quot;U0001F{addr % 1000}&quot;.encode()
+    return emoji.decode('unicode_escape')
+
+def SendToAll(msg):
+    for i in clients:
+        i.send(msg)
+
+def WaitForMessage(addr, conn):
+    clients.append(conn)
+    while True:
+        try:
+            data = conn.recv(1024)
+            code = Emojify(addr[1])
+            message = f&quot;\n[{addr[1]}] {code} says: {data.decode('utf-8')}&quot;
+            SendToAll(message.encode('utf-8'))
+        except:
+            clients.remove(conn)
+            SendToAll(f&quot;{code} Disconnected&quot;.encode('utf-8'))
+            break
+    conn.close()
+</code></pre>
+<p>Непосредственно основной луп:</p>
+<pre><code class="language-Python">s.listen(10)
+while True:
+    conn, addr = s.accept()
+    print('Connected with ' + addr[0] + ':' + str(addr[1]))
+    th = threading.Thread(target=WaitForMessage, args=(addr, conn))
+    th.start()
+</code></pre>
+<h2 id="5">Задание 5</h2>
+<h3 id="_9">Клиентская часть</h3>
+<p>Используется функция ожидания сообщения из прошлого задания, аналогично предыдущим заданиям инициализируется и сокет. Реализация основного лупа у клиента:</p>
+<pre><code class="language-Python">header = b'POST /subject HTTP/1.1\r\nHost: localhost\r\nAccept: text/html\r\nContent-Type: application/json\r\n' # темплейт
+message = 1
+while message:
+    th = threading.Thread(target=WaitForMessage, args=(s,))
+    th.start()
+    key = input('Дисциплина: ') # ждем ввода предмета и оценки
+    value = input('Оценка: ')
+    son_of_j = json.dumps({key: value}) # создаем json
+    request = header + f&quot;Content-Length: {len(son_of_j)}\r\n\r\n&quot;.encode() + json.dumps({key: value}).encode('utf-8')
+    s.send(request)
+s.close()
+</code></pre>
+<h3 id="_10">Серверная часть</h3>
+<p>Класс Response:</p>
+<pre><code class="language-Python">class Response:
+    def __init__(self, status, reason, headers=None, body=None):
+        self.status = status
+        self.reason = reason
+        self.headers = headers
+        self.body = body
+
+    def return_string(self):
+        return f&quot;{self.status} {self.reason} {self.body}&quot;
+</code></pre>
+<p>Класс Request:</p>
+<pre><code class="language-Python">class Request:
+    def __init__(self, method, target, version, headers, rfile, conn):
+        self.method = method
+        self.target = target
+        self.version = version
+        self.headers = headers
+        self.rfile = rfile
+        self.conn = conn
+
+    @property
+    def path(self):
+        return self.url.path
+
+    @property
+    @lru_cache(maxsize=None)
+    def query(self):
+        return parse_qs(self.url.query)
+
+    @property
+    @lru_cache(maxsize=None)
+    def url(self):
+        return urlparse(self.target)
+
+    def body(self):
+        size = self.headers.get('Content-Length')
+        if not size:
+            return None
+        return self.rfile.read(size)
+</code></pre>
+<p>Инициализация сервера и обслуживание клиента:</p>
+<pre><code class="language-Python">class HTTPserver():
+    def __init__(self, host, port, server_name):
+        self._host = host
+        self._port = port
+        self._server_name = server_name
+
+    def init_socket(self):
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            self.socket.bind((self._host, self._port))
+            self.socket.listen(10)
+        except socket.error as msg:
+            print('Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
+
+    def launch_server(self):
+        self.init_socket()
+        while True:
+            conn, addr = self.socket.accept()
+            print('Connected with ' + addr[0] + ':' + str(addr[1]))
+            th = threading.Thread(target=self.serve_client, args=(conn,))
+            th.start()
+
+    def serve_client(self, conn):
+        while True:
+            req = self.parse_request(conn)
+            resp = self.handle_request(req)
+            conn.send(resp.return_string().encode())
+            with open('AcademicPerformance.html') as html:
+                conn.send(html.read().encode()) # sending html
+        conn.close()
+</code></pre>
+<p>Парсеры (методы внутри класса HTTPserver):</p>
+<pre><code class="language-Python">    def parse_request(self, conn):
+        rfile = conn.makefile('rb')
+        method, target, ver = self.parse_request_line(rfile)
+        headers = self.parse_headers(rfile)
+        return Request(method, target, ver, headers, rfile, conn)
+
+    def parse_request_line(self, rfile):
+        raw = rfile.readline(MAX_LINE + 1)
+        if len(raw) &gt; MAX_LINE:
+            raise HTTPError(400, 'Bad request', 'Request line is too long')
+
+        req_line = str(raw, 'iso-8859-1')
+        print(req_line)
+        words = req_line.split()
+        if len(words) != 3:
+            raise HTTPError(400, 'Bad request', 'Malformed request line')
+
+        method, target, ver = words
+        if ver != 'HTTP/1.1':
+            raise HTTPError(505, 'HTTP Version Not Supported')
+        return method, target, ver
+
+    def parse_headers(self, rfile):
+        headers = []
+        while True:
+            line = rfile.readline(MAX_LINE + 1)
+            if len(line) &gt; MAX_LINE:
+                raise HTTPError(494, 'Request header too large')
+
+            if line in (b'\r\n', b'\n', b''):
+                break
+            headers.append(line)
+            if len(headers) &gt; MAX_HEADERS:
+                raise HTTPError(494, 'Too many headers')
+
+        sheaders = b''.join(headers).decode('iso-8859-1')
+        return Parser().parsestr(sheaders)
+
+    def handle_request(self, req): # решаем кто пост, кто гет
+        if req.path == '/subject' and req.method == 'POST':
+            return self.handle_post(req)
+
+        if req.path == '/subject' and req.method == 'GET':
+            return self.handle_get(req)
+</code></pre>
+<p>Реализация работы с JSON и обновлением страницы:</p>
+<pre><code class="language-Python">    def handle_post(self, req): # успокаиваем пользователя, что мы все прочитали
+        content_type = req.headers.get('Content-Type')
+        accept = req.headers.get('Accept')
+        if ('text/html' in accept) and ('application/json' in content_type): # проверка accept и content-type
+            contentType = 'text/html; charset=utf-8'
+            body = 'I can read your request'
+            son_of_j = self.ExtractJson(req)
+            try:
+                self.CombineAndSave(son_of_j)
+            except:
+                return Response(500, 'Internal server error')
+        else:
+            return Response(406, 'Not Acceptable')
+        body = body.encode('utf-8')
+        headers = [('Content-Type', contentType), ('Content-Length', len(body))]
+        return Response(200, 'OK', headers, body)
+
+    def CombineAndSave(self, d):
+        with open('data.json', mode='r', encoding='utf-8') as f:
+            data = json.load(f)
+            for i in d.keys(): # совмещаем json файлы
+                data[i] = data.get(i, [])
+                data[i].append(d[i])
+        with open('data.json', mode='w', encoding='utf-8') as f: # сохраняем итоговый json
+            json.dump(data, f)
+        data = json2html.convert(json=data)
+        with open('AcademicPerformance.html', 'w') as htmlfile: # создаем html из json
+            htmlfile.write(str(data))
+
+    def ExtractJson(self, req): # вытаскиваем контент из реквеста
+        json_str = req.rfile.readline(int(req.headers.get('Content-Length')))
+        return json.loads(json_str)
+</code></pre>
+<p>Инициализация и запуск сервера:</p>
+<pre><code class="language-Python">a = HTTPserver('localhost', 8081, 'Server')
+a.launch_server()
+</code></pre></div>
             </div>
         </div>
 
@@ -308,5 +538,5 @@ export default {
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2024-01-09 23:11:53.713143+00:00
+Build Date UTC : 2024-01-11 10:49:03.460686+00:00
 -->
